@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 @RequestMapping("/cases")
 public class CaseController {
 
