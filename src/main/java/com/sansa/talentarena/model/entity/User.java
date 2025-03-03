@@ -1,7 +1,9 @@
 package com.sansa.talentarena.model.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +25,10 @@ public class User implements UserDetails {
     private UUID id;
     private String name;
     private String password;
+    @Column(unique = true)
     private String email;
     private String phone;
+    @Column(unique = true)
     private String dni;
     private String bloodType;
     private String knownIssues;
