@@ -4,14 +4,12 @@ import com.sansa.talentarena.model.dto.LoginRequestDTO;
 import com.sansa.talentarena.model.dto.RegisterRequestDTO;
 import com.sansa.talentarena.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
+@CrossOrigin(allowedHeaders = "*", originPatterns = "*")
 public class AuthController {
     private final AuthService authService;
 
