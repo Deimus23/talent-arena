@@ -28,6 +28,7 @@ public class AppConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(httpSec -> {
                     httpSec.requestMatchers("/auth/***").permitAll();
+                    httpSec.requestMatchers("/test/***").permitAll();
                     httpSec.anyRequest().authenticated();
                 })
                 .build();

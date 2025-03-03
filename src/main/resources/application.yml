@@ -15,5 +15,10 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: talentarena
 talent-arena:
+  client:
+    sim-swap:
+      host: ${RAPID_API_HOST}
+      apiKey: ${RAPID_API_TOKEN}
+      baseUrl: ${RAPID_API_URL}
   jwt:
     secret: 5468566D597133743677397A24432646294A404E635266556A586E5A72347537
