@@ -5,11 +5,15 @@ spring:
   datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    url: jdbc:postgresql:ep-tiny-wave-a9n1gz6q-pooler.gwc.azure.neon.tech/talentarena?sslmode=require
+    url: jdbc:postgresql://ep-tiny-wave-a9n1gz6q-pooler.gwc.azure.neon.tech/talentarena?user=talentarena_owner&password=npg_jZuCkF0N6gfG&sslmode=require
+
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: trobafesta
+        default_schema: talentarena
+talent-arena:
+  jwt:
+    secret: 5468566D597133743677397A24432646294A404E635266556A586E5A72347537
