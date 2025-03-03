@@ -1,0 +1,16 @@
+spring:
+  application:
+    name:
+      talent-arena
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql:ep-tiny-wave-a9n1gz6q-pooler.gwc.azure.neon.tech/talentarena?sslmode=require
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: trobafesta
+
