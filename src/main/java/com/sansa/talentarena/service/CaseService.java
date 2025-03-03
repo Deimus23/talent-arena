@@ -1,17 +1,20 @@
 package com.sansa.talentarena.service;
 
 import com.sansa.talentarena.SimSwapClient;
+import com.sansa.talentarena.model.dto.CaseDTO;
 import com.sansa.talentarena.model.entity.Case;
 import com.sansa.talentarena.model.entity.User;
 import com.sansa.talentarena.model.enumerates.CaseType;
 import com.sansa.talentarena.repository.CaseRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,18 +22,23 @@ public class CaseService {
 
     private final CaseRepository caseRepository;
     private final SimSwapClient simSwapClient;
+    private final ModelMapper modelMapper;
 
-    public List<Case> findAllCases() {
-        return (List<Case>) this.caseRepository.findAll();
+    public List<CaseDTO> findAllCases() {
+        List<Case> cases = (List<Case>)  this.caseRepository.findAll();
+        return cases.stream().map(caseEnt -> modelMapper.map(caseEnt, CaseDTO.class)).toList();
     }
 
-    public Case createCase(CaseType caseType) {
+    public CaseDTO createCase(CaseType caseType) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Case newCase = new Case();
         newCase.setUser(currentUser);
         newCase.setCaseType(caseType);
+        newCase.setId(UUID.randomUUID());
         newCase.setReliability(this.getReliability());
-        return newCase;
+        Case savedCase = this.caseRepository.save(newCase);
+
+        return modelMapper.map(savedCase, CaseDTO.class);
     }
 
     public int getReliability() {
@@ -38,5 +46,9 @@ public class CaseService {
         HashMap<String, Object> response = simSwapClient.checkSimDate(phoneNumber).block();
         System.out.println(response);
         return 5;
+    }
+
+    public CaseDTO findCaseById(UUID caseId) {
+        return this.modelMapper.map(this.caseRepository.findById(caseId).orElse(null), CaseDTO.class);
     }
 }

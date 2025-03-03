@@ -2,6 +2,7 @@ package com.sansa.talentarena.config;
 
 import com.sansa.talentarena.filters.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,4 +35,11 @@ public class AppConfig {
                 .build();
     }
 
+<<<<<<< Updated upstream
+=======
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+>>>>>>> Stashed changes
 }

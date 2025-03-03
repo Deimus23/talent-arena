@@ -1,9 +1,7 @@
 package com.sansa.talentarena.model.entity;
 
 import com.sansa.talentarena.model.enumerates.CaseType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +21,7 @@ public class Case {
     private UUID id;
     private String coordinates;
     private int reliability;
+    @Enumerated(EnumType.STRING)
     private CaseType caseType;
     private boolean priorized;
     private LocalDateTime timestamp;

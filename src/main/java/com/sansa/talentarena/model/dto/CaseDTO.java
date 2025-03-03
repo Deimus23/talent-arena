@@ -13,8 +13,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Data
-public class CaseRequestDTO {
+public class CaseDTO {
     private UUID id;
+    private UserDTO user;
     private String coordinates;
     private int reliability;
     private CaseType caseType;
