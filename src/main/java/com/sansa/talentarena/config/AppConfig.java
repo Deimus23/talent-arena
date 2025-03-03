@@ -35,11 +35,8 @@ public class AppConfig {
                 .build();
     }
 
-<<<<<<< Updated upstream
-=======
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
->>>>>>> Stashed changes
 }
