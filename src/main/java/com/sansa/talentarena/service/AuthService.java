@@ -1,5 +1,6 @@
 package com.sansa.talentarena.service;
 
+import com.sansa.talentarena.model.dto.LoginRequestDTO;
 import com.sansa.talentarena.model.dto.RegisterRequestDTO;
 import com.sansa.talentarena.model.entity.User;
 import com.sansa.talentarena.repository.UserRepository;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,6 +22,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
+    private final UserDetailsService userDetailsService;
     public String registerUser(RegisterRequestDTO requestDTO) {
         dniAutentification(requestDTO.getDni());
         User user = User.builder()
@@ -36,6 +39,14 @@ public class AuthService {
         User savedUser = userRepository.save(user);
         return jwtService.generateToken((UserDetails) savedUser, new HashMap<>());
     }
+    public String loginUser(LoginRequestDTO requestDTO){
+        User user = (User)this.userDetailsService.loadUserByUsername(requestDTO.getEmail());
+        if(passwordEncoder.matches(requestDTO.getPassword(),user.getPassword())){
+            return this.jwtService.generateToken(user, new HashMap<>());
+        }else{throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);}
+    }
+
+
     public void dniAutentification(String dni){
         String LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
         String dniRegex = "^[0-9]{8}[A-HJ-NP-TV-Z]$";
