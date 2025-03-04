@@ -1,6 +1,5 @@
 package com.sansa.talentarena.service;
 
-import com.sansa.talentarena.SimSwapClient;
 import com.sansa.talentarena.model.dto.CaseDTO;
 import com.sansa.talentarena.model.entity.Case;
 import com.sansa.talentarena.model.entity.User;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -21,7 +19,6 @@ import java.util.UUID;
 public class CaseService {
 
     private final CaseRepository caseRepository;
-    private final SimSwapClient simSwapClient;
     private final ModelMapper modelMapper;
 
     public List<CaseDTO> findAllCases() {
@@ -43,12 +40,19 @@ public class CaseService {
 
     public int getReliability() {
         String phoneNumber = "+363761113334";
-        HashMap<String, Object> response = simSwapClient.checkSimDate(phoneNumber).block();
-        System.out.println(response);
         return 5;
     }
 
     public CaseDTO findCaseById(UUID caseId) {
         return this.modelMapper.map(this.caseRepository.findById(caseId).orElse(null), CaseDTO.class);
+    }
+
+    public void createCase(User user) {
+        Case newCase = new Case();
+        newCase.setUser(user);
+        newCase.setCaseType(CaseType.OTHER);
+        newCase.setId(UUID.randomUUID());
+        newCase.setReliability(this.getReliability());
+        this.caseRepository.save(newCase);
     }
 }

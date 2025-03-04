@@ -16,9 +16,12 @@ spring:
         default_schema: talentarena
 talent-arena:
   client:
+    apiKey: ${RAPID_API_TOKEN}
+    location-verifier:
+      baseUrl: ${LOCATION_VERIFIER_BASEURL}
+      host: ${LOCATION_VERIFIER_HOST}
     sim-swap:
       host: ${RAPID_API_HOST}
-      apiKey: ${RAPID_API_TOKEN}
       baseUrl: ${RAPID_API_URL}
   jwt:
     secret: 5468566D597133743677397A24432646294A404E635266556A586E5A72347537

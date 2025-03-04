@@ -1,6 +1,7 @@
 package com.sansa.talentarena.controller;
 
-import com.sansa.talentarena.SimSwapClient;
+import com.sansa.talentarena.client.LocationVerifier;
+import com.sansa.talentarena.model.dto.locationverifier.VerifyLocationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,13 @@ import java.util.HashMap;
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
-    private final SimSwapClient simSwapClient;
+    private final LocationVerifier locationVerifier;
 
     @PostMapping("/sim")
-    public HashMap<String, Object> test() {
-        HashMap<String, Object> res = this.simSwapClient.checkSimDate("+363761113334").block();
+    public String test() {
+        var verifyLocationRequest = new VerifyLocationRequest("+34650040771", 41.598817f, 2.347965f);
+        boolean res = locationVerifier.isOutside(verifyLocationRequest);
         System.out.println("break");
-        return res;
+        return "res";
     }
 }
